@@ -9,6 +9,7 @@ import { ListEmployeesComponent } from './employees/list-employees.component';
 import { CreateEmployeeComponent } from './employees/create-employee.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { SelectRequiredValidatorDirective } from './shared/select-required-validator.directive';
 
 const appRoutes: Routes = [
   { path: 'list', component: ListEmployeesComponent },
@@ -17,7 +18,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, ListEmployeesComponent, CreateEmployeeComponent],
+  declarations: [AppComponent, ListEmployeesComponent, CreateEmployeeComponent, SelectRequiredValidatorDirective],
   imports: [
     BrowserModule,
     FormsModule,

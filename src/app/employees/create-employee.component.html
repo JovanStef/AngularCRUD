@@ -26,12 +26,12 @@
         </div>
         <div
           class="form-group"
-          [class.has-error]="email.invalid && email.touched"
+          [class.has-error]="email.invalid"
           [class.has-success]="email.valid"
         >
           <label for="email" class="control-label">Email</label>
           <input
-            required
+            [required]="contactPreference.value == 'email'"
             email
             id="email"
             name="email"
@@ -40,30 +40,34 @@
             class="form-control"
             #email="ngModel"
           />
-          <span
-            class="help-block"
-            *ngIf="email.errors?.required && email.touched"
+          <span class="help-block" *ngIf="email.errors?.required"
             >Email is required</span
           >
-          <span class="help-block" *ngIf="email.errors?.email && email.touched"
+          <span class="help-block" *ngIf="email.errors?.email"
             >Email is invalid</span
           >
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="phoneNumber.invalid">
           <label for="phoneNumber">Phone Number</label>
           <input
+            [required]="contactPreference.value == 'phone'"
+            #phoneNumber="ngModel"
             id="phoneNumber"
             name="phoneNumber"
             [(ngModel)]="employee.phoneNumber"
             type="text"
             class="form-control"
           />
+          <span class="help-block" *ngIf="phoneNumber.errors?.required"
+            >Phone number is required</span
+          >
         </div>
         <div class="form-group">
           <label>Contact Preferences</label>
           <div class="form-control">
             <label class="radio-inline mx-1">
               <input
+                #contactPreference="ngModel"
                 type="radio"
                 value="email"
                 name="contactPreference"
@@ -73,6 +77,7 @@
             </label>
             <label class="radio-inline mx-1">
               <input
+                #contactPreference="ngModel"
                 type="radio"
                 value="phone"
                 name="contactPreference"
@@ -81,12 +86,18 @@
               Phone
             </label>
           </div>
+          Contact Preference Selected value: {{ contactPreference.value }}
         </div>
-        <div class="form-group">
+        <div
+          class="form-group"
+          [class.has-error]="gender.touched && gender.invalid"
+        >
           <label>Gender</label>
           <div class="form-control">
             <label class="radio-inline mx-1">
               <input
+                required
+                #gender="ngModel"
                 type="radio"
                 value="male"
                 name="gender"
@@ -96,6 +107,8 @@
             </label>
             <label class="radio-inline mx-1">
               <input
+                required
+                #gender="ngModel"
                 type="radio"
                 value="female"
                 name="gender"
@@ -104,6 +117,9 @@
               Female
             </label>
           </div>
+          <span class="help-block" *ngIf="gender.touched && gender.invalid"
+            >Gender is required</span
+          >
         </div>
         <div class="form-group">
           <div class="form-control">
@@ -117,20 +133,33 @@
             </label>
           </div>
         </div>
-        <div class="form-group">
-          <label for="department">
+        <div
+          class="form-group"
+          [class.has-error]="department.touched && department.invalid"
+        >
+          <label for="department" class="control-label">
             Department
           </label>
           <select
+            appSelectRequiredValidator="select"
+            required
+            #department="ngModel"
             id="department"
             name="department"
             [(ngModel)]="employee.department"
             class="form-control"
           >
+            <option value="select">Select Department</option>
             <option *ngFor="let dept of departments" [value]="dept.id">
               {{ dept.name }}
             </option>
           </select>
+          <span
+            class="help-block"
+            *ngIf="department.touched && department.errors?.default"
+          >
+            Department is required
+          </span>
         </div>
         <div class="form-group">
           <label for="dateOfBirth">Date of birth</label>
